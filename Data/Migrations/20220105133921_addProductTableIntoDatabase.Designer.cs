@@ -13,7 +13,7 @@ namespace WebShop.Data.Migrations
     [Migration("20220105133921_addProductTableIntoDatabase")]
     partial class addProductTableIntoDatabase
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

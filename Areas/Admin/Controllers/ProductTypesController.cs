@@ -12,7 +12,7 @@ namespace WebShop.Areas.Admin.Controllers
     public class ProductTypesController : Controller
     {
         private ApplicationDbContext _db;
-            public ProductTypesController(ApplicationDbContext db)
+        public ProductTypesController(ApplicationDbContext db)
         {
             _db = db;
 
@@ -45,13 +45,13 @@ namespace WebShop.Areas.Admin.Controllers
         //create Edit action metod
         public ActionResult Edit(int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 return NotFound();
 
             }
             var productType = _db.ProductTypes.Find(id);
-           if (productType ==null)
+            if (productType == null)
             {
                 return NotFound();
             }
@@ -93,9 +93,9 @@ namespace WebShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Details(ProductTypes productTypes)
         {
-            
-                return RedirectToAction(actionName: nameof(Index));
-        
+
+            return RedirectToAction(actionName: nameof(Index));
+
         }
 
         //create Delete action metod
@@ -117,17 +117,19 @@ namespace WebShop.Areas.Admin.Controllers
         //Create Delete action metod
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int? id,ProductTypes productTypes)
-        { if(id== null)
+        public async Task<IActionResult> Delete(int? id, ProductTypes productTypes)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
 
-        if( id!=productTypes.Id)
+            if (id != productTypes.Id)
             {
                 return NotFound();
                 var producTypes = _db.ProductTypes.Find(id);
-                if(productTypes==null)
+
+                if (productTypes == null)
                 {
                     return NotFound();
                 }

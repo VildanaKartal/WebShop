@@ -2,7 +2,7 @@
 
 namespace WebShop.Data.Migrations
 {
-    public partial class addProductTableIntoDatabase : Migration
+    public partial class AddProductTableIntoDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
