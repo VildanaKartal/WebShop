@@ -46,13 +46,10 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         //Get Create method
-
-       
-        [ValidateAntiForgeryToken]
         public IActionResult Create()
         {
             ViewData["productTypeId"] = new SelectList(_db.ProductTypes.ToList(), "Id", "ProductType");
-          
+           
             return View();
         }
 
@@ -68,7 +65,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 {
                     ViewBag.message = "This product is already exist";
                     ViewData["productTypeId"] = new SelectList(_db.ProductTypes.ToList(), "Id", "ProductType");
-                    
+               
                     return View(product);
                 }
 
@@ -81,7 +78,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 if (image == null)
                 {
-                    product.Image = "Images/noimage.jpg";
+                    product.Image = "Images/noimage.PNG";
                 }
                 _db.Products.Add(product);
                 await _db.SaveChangesAsync();
@@ -91,8 +88,9 @@ namespace OnlineShop.Areas.Admin.Controllers
             return View(product);
         }
 
+
         //GET Edit Action Method
-       
+
         public ActionResult Edit(int? id)
         {
             ViewData["productTypeId"] = new SelectList(_db.ProductTypes.ToList(), "Id", "ProductType");
