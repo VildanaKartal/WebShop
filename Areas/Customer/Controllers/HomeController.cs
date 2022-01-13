@@ -82,6 +82,8 @@ namespace WebShop.Controllers
             HttpContext.Session.Set("products", products);
             return RedirectToAction(nameof(Index));
         }
+
+        //Get Remove action meth
         [HttpPost]
         public IActionResult Remove(int? id)
         {
