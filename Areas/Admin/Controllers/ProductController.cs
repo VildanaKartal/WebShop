@@ -124,7 +124,7 @@ namespace OnlineShop.Areas.Admin.Controllers
 
                 if (image == null)
                 {
-                    product.Image = "Images/noimage.PNG";
+                    product.Image = "Images/noimage.jpg";
                 }
                 _db.Products.Update(product);
                 await _db.SaveChangesAsync();

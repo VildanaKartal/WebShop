@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
 using WebShop.Models;
+using WebShop.Utility;
 
 namespace WebShop.Controllers
 {
@@ -28,7 +29,7 @@ namespace WebShop.Controllers
         }
         public IActionResult Index()
         {
-            return View(_db.Products.Include(c=>c.ProductTypes).ToList());
+            return View(_db.Products.Include(c => c.ProductTypes).ToList());
         }
 
         public IActionResult Privacy()
@@ -41,5 +42,90 @@ namespace WebShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //Get Product Detail method
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = _db.Products.Include(c => c.ProductTypes).FirstOrDefault(c => c.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        //Post Product Detail method
+        [HttpPost]
+        [ActionName("Details")]
+        public ActionResult ProductDetails(int? id)
+        {
+            List<Products> products = new List<Products>();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = _db.Products.Include(c => c.ProductTypes).FirstOrDefault(c => c.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            products = HttpContext.Session.Get<List<Products>>("products");
+            if (products == null)
+            {
+                products = new List<Products>();
+            }
+
+            products.Add(product);
+            HttpContext.Session.Set("products", products);
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult Remove(int? id)
+        {
+            List<Products> products = HttpContext.Session.Get<List<Products>>("products");
+            if (products != null)
+            {
+                var product = products.FirstOrDefault(c => c.Id == id);
+                if (product != null)
+                {
+                    products.Remove(product);
+                    HttpContext.Session.Set("products", products);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // Get Product Cart method
+
+        public IActionResult Cart()
+        {
+            List<Products> products = HttpContext.Session.Get<List<Products>>("products");
+            if (products == null)
+            {
+
+                products = new List<Products>();
+            }
+
+            return View(products);
+        }
+
+        //Get Remove action
+        [ActionName("Remove")]
+        public IActionResult RemoveToCart(int? id)
+        {
+            List<Products> products = HttpContext.Session.Get<List<Products>>("products");
+            if (products != null)
+            {
+                var product = products.FirstOrDefault(c => c.Id == id);
+                if (product != null)
+                {
+                    products.Remove(product);
+                    HttpContext.Session.Set("products", products);
+                }
+            }
+            return RedirectToAction(nameof(Index));
     }
+   }
 }
